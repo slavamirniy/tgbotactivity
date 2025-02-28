@@ -72,7 +72,7 @@ export const TelegramBotActivityGenerator = (bot: TelegramBot) => new FunctionAc
         }
         const validationMessage = await bot.sendMessage(data.userid, data.text ?? 'Что вы выберите?', {
             reply_markup: {
-                inline_keyboard: buttonRows
+                inline_keyboard: buttonRows as TelegramBot.InlineKeyboardButton[][]
             }
         });
 
@@ -149,12 +149,17 @@ export const TelegramBotActivityGenerator = (bot: TelegramBot) => new FunctionAc
     },
     waitForMessage: async (data: { userid: number }): Promise<{ text?: string, imageURL?: string }> => {
         return new Promise<{ text?: string, imageURL?: string }>((resolve) => {
-            bot.on('message', async (msg) => {
+            bot.on('message', async function handler(msg: TelegramBot.Message) {
                 if (msg.chat.id === data.userid && msg.text) {
                     resolve({ text: msg.text });
+                    bot.removeListener('message', handler);
                 }
                 if (msg.chat.id === data.userid && msg.photo) {
-                    resolve({ imageURL: await bot.getFileLink(msg.photo[msg.photo.length - 1].file_id) });
+                    const image = msg.photo[msg.photo.length - 1];
+                    if (image) {
+                        resolve({ imageURL: await bot.getFileLink(image.file_id) });
+                        bot.removeListener('message', handler);
+                    }
                 }
             });
         });
