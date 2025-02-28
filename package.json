@@ -1,0 +1,28 @@
+{
+  "name": "tgbotactivity",
+  "version": "1.0.0",
+  "description": "A Telegram bot activity for yats generator using node-telegram-bot-api.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "telegram",
+    "bot",
+    "activity"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^22.13.5",
+    "axios": "^1.7.9",
+    "http-proxy-agent": "^7.0.2",
+    "https-proxy-agent": "^7.0.6",
+    "node-telegram-bot-api": "^0.66.0",
+    "task-system-package": "github:slavamirniy/yats"
+  },
+  "devDependencies": {
+    "@types/node-telegram-bot-api": "^0.64.7"
+  }
+}

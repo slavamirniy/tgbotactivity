@@ -1,0 +1,5 @@
+package-lock.json
+/node_modules
+/built
+prompt.txt
+credentials.json
